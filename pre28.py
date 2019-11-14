@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 plt.figure()
 data = np.loadtxt('pre28.dat')
-plt.plot(data[:,1], data[:,2])
+plt.plot(data[:,0], data[:,1])
 
 plt.axis('square')
 plt.xlim([-25, 25])
