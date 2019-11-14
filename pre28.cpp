@@ -3,46 +3,55 @@
 #include <fstream>
 #include <iostream>
 #include<stdio.h> 
-
+#include <cmath>
+#include <string> // String Manipulation c_str
+#include <sstream> // Used For Variable String Name
 using namespace std;
 
-float nl= 1; // friccion para velocidades bajas 
-float nm=3/2; //friccion para velocidades medias
-float nh= 2; //friccion para velocidades altas
+const double K=50.0;
+double m= 0.2; //masa
+const double nl= 1; // friccion para velocidades bajas 
+const double nm=3/2; //friccion para velocidades medias
+const double nh= 2; //friccion para velocidades altas
 
-float fo,f1,f2,f3;
+double Vx(double vel,double angle);
+double Vy(double vel,double angle);
+double Posx(double vel,double angle);
+double Posy(double vel,double angle);
 
+double f0(double t, double y0, double y1){
+  return y1;
+}
 
+double f1(double t, double y0, double y1){
+  return (-K/m)* std::pow (y0, nl);
+}
 
-
-
-// A sample differential equation "dy/dx = (x - y)/2" 
 float dydx(float x, float y) 
 { 
-	return((x - y)/2); 
+    return((x - y)/2); 
 } 
 
-// Finds value of y for a given x using step size h 
-// and initial value y0 at x0. 
+//pasar los angulos a radianes
+//Codigo tomado de https://stackoverflow.com/questions/28013383/implementation-of-runge-kutta-fourth-order-in-c
+double rad(double angle) 
+{
+    return (M_PI * (90-angle)) / 180.0;
+}
+
 float rk(float x0, float y0, float x, float h) 
-{ 
+{
 	int n = (int)((x - x0) / h); 
 	float k1, k2, k3, k4, k5; 
-	// Iterate for number of iterations 
 	float y = y0; 
 	for (int i=1; i<=n; i++) 
 	{ 
-		// Apply Runge Kutta Formulas to find 
-		// next value of y 
 		k1 = h*dydx(x0, y); 
 		k2 = h*dydx(x0 + 0.5*h, y + 0.5*k1); 
 		k3 = h*dydx(x0 + 0.5*h, y + 0.5*k2); 
 		k4 = h*dydx(x0 + h, y + k3); 
 
-		// Update next value of y 
 		y = y + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);; 
-
-		// Update next value of x 
 		x0 = x0 + h; 
 	} 
 
@@ -51,7 +60,12 @@ float rk(float x0, float y0, float x, float h)
 
 int main() 
 { 
-	float x0 = 0, y = 1, x = 2, h = 0.2; 
-	rk(x0, y, x, h); 
+    const double ti=0;
+    const double tf=17.0;
+    double x=1;
+    double v=0;
+	float y = 1;
+    float h = 0.2; 
+	rk(ti, y, tf, h); 
 	return 0; 
 } 
