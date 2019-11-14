@@ -14,11 +14,6 @@ const double nl= 1; // friccion para velocidades bajas
 const double nm=3/2; //friccion para velocidades medias
 const double nh= 2; //friccion para velocidades altas
 
-double Vx(double vel,double angle);
-double Vy(double vel,double angle);
-double Posx(double vel,double angle);
-double Posy(double vel,double angle);
-
 double f0(double t, double y0, double y1){
   return y1;
 }
@@ -31,13 +26,6 @@ float dydx(float x, float y)
 { 
     return((x - y)/2); 
 } 
-
-//pasar los angulos a radianes
-//Codigo tomado de https://stackoverflow.com/questions/28013383/implementation-of-runge-kutta-fourth-order-in-c
-double rad(double angle) 
-{
-    return (M_PI * (90-angle)) / 180.0;
-}
 
 float rk(float x0, float y0, float x, float h) 
 {
@@ -53,6 +41,8 @@ float rk(float x0, float y0, float x, float h)
 
 		y = y + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);; 
 		x0 = x0 + h; 
+        return y; 
+
 	} 
 
 	return y; 
