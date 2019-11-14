@@ -41,11 +41,8 @@ float rk(float x0, float y0, float x, float h)
 
 		y = y + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);; 
 		x0 = x0 + h; 
-        return y; 
-
+		return y; 
 	} 
-
-	return y; 
 } 
 
 int main() 
@@ -56,6 +53,7 @@ int main()
     double v=0;
 	float y = 1;
     float h = 0.2; 
-	rk(ti, y, tf, h); 
+	float p= rk(ti, y, tf, h);
+    cout<< p <<endl;
 	return 0; 
 } 
