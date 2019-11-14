@@ -9,7 +9,7 @@
 #include <sstream> // Used For Variable String Name
 using namespace std;
 
-const double K=0.7;
+const double k=0.7;
 double m= 0.2; //masa
 const double nl= 1; // friccion para velocidades bajas 
 const double nm=3/2; //friccion para velocidades medias
@@ -23,12 +23,12 @@ double f0(double t, double y0, double y1){
 }
 
 double f1(double t, double y0, double y1){
-  return (-K/m)* std::pow (y0, nl);
+  return (-k/m)* std::pow (y0, nl);
 }
 
-float dydx(float x, float y) 
+float dydx(float x, float t) 
 { 
-    return((x - y)/2); 
+    return((x - t)/2); 
 } 
 
 float rk(float x0, float y0, float x, float h) 
@@ -74,13 +74,14 @@ void rk4(double ti,double tf, double h, double & x, double & v){
 		  double old_v=v;
 		  x = x + h * f0(t,old_x,old_v);
 		  v = v + h * f1(t,old_x,old_v);
-		  k1 = h*dydx(x, y); 
+		
+		  k1 = h*dydx(x, t); 
 		  k2 = h*dydx(x + 0.5*h, y + 0.5*k1); 
 		  k3 = h*dydx(x + 0.5*h, y + 0.5*k2); 
 		  k4 = h*dydx(x + h, y + k3); 
 		  y = y + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);
-		  std::cout<<t<<" "<<x<<" "<<y<<std::endl;
-		  x= x+h;
-		  y=y + h;
+		  std::cout<<nt<<" "<<x<<" "<<y<<std::endl;
+		  old_x=x;
+		  old_v=v;
 		}
 }
